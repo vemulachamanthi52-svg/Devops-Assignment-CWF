@@ -1,4 +1,4 @@
-# Task 1: Server Setup & SSH Configuration
+## Task 1: Server Setup & SSH Configuration
 
 ## Objective
 
