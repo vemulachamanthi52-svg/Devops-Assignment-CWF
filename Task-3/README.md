@@ -19,12 +19,16 @@ sudo mkdir -p /opt/container-monitor/logs
 ```bash
 #!/bin/bash
 
-DATE=$(date "+%Y-%m-%d %H:%M:%S")
+CONTAINER_NAME="myimage"
+LOG_DIR="/opt/container-monitor/logs"
+LOG_FILE="$LOG_DIR/monitor.log"
 
-docker stats --no-stream --format "{{.Name}} | CPU: {{.CPUPerc}} | MEM: {{.MemUsage}}" >> /opt/container-monitor/logs/monitor.log
+TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 
-echo "Logged at: $DATE" >> /opt/container-monitor/logs/monitor.log
-echo "------------------------" >> /opt/container-monitor/logs/monitor.log
+docker stats --no-stream --format "{{.CPUPerc}} {{.MemUsage}}" $myimage | while read cpu mem
+do
+    echo "$TIMESTAMP | CPU: $cpu | MEM: $mem" >> $LOG_FILE
+done
 ```
 
 ### 3. Made Script Executable
